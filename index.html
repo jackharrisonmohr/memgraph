@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speech Recognition Example</title>
+</head>
+<body>
+  <h1>Speech Recognition Example</h1>
+  <button id="startButton">Start Recording</button>
+  <p id="output"></p>
+
+  <script>
+    const startButton = document.getElementById("startButton");
+    const output = document.getElementById("output");
+
+    let recognition = new window.SpeechRecognition() || new window.webkitSpeechRecognition();
+
+    recognition.onstart = () => {
+      output.textContent = "Listening...";
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      output.textContent = transcript;
+    };
+
+    recognition.onerror = (event) => {
+      output.textContent = "Error: " + event.error;
+    };
+
+    startButton.addEventListener("click", () => {
+      recognition.start();
+    });
+  </script>
+</body>
+</html>
